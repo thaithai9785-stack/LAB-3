@@ -97,7 +97,7 @@ public class DeveloperManager extends ArrayList<Developers>{
     
     
     //x? lí
-    public Developers searchDevByID(String devID){
+    public Developers searchIDDev(String devID){
         for (Developers d : this) {
             if(d.getDevID().equalsIgnoreCase(devID.trim()))
                 return d;
@@ -121,7 +121,7 @@ public class DeveloperManager extends ArrayList<Developers>{
     //case2
     public void addDev(){
          Developers d = inputter.getDeveloperInfo();
-        if(searchDevByID(d.getDevID()) != null){
+        if(searchIDDev(d.getDevID()) != null){
             System.out.println("Dev is already exist");
             return;
         }
@@ -133,7 +133,7 @@ public class DeveloperManager extends ArrayList<Developers>{
     //case 3
     public void searchDevByID(){
         String ID = inputter.getString("ID to search: ");
-        Developers d = searchDevByID(ID);
+        Developers d = searchIDDev(ID);
         
         if (d == null) {
             System.out.println("Developer ID does not exits ");
@@ -148,7 +148,7 @@ public class DeveloperManager extends ArrayList<Developers>{
     //case 4
     public void updateSalaryByID(){
         String ID = inputter.getString("ID to update: ");
-        Developers d = searchDevByID(ID);
+        Developers d = searchIDDev(ID);
         
         if (d == null) {
             System.out.println("Developer ID does not exits ");
