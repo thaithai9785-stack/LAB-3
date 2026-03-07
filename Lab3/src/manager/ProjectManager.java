@@ -7,6 +7,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.Developers;
 import model.Projects;
 import tools.Inputter;
 
@@ -135,11 +136,29 @@ public class ProjectManager extends ArrayList<Projects> {
             return;
         }
 
-        printProjectHeader();
-        for (Projects p : this) {
-            System.out.println(p.toString());
+        for (Developers d : this.devManager) {
+        boolean  hasProject=false;
+            System.out.println("Dev: " + d.getDevName());
+
+            printProjectHeader();
+            for (Projects p : this) {
+                if(p.getDevID().trim().equalsIgnoreCase(d.getDevID().trim())){
+                if(hasProject == false)
+                    printProjectHeader();
+                System.out.println(p.toString());
+                hasProject =true;   
+                }
+            }
+            
+            if(!hasProject)
+                System.out.println("Dev don't have Project");
+            
         }
+
     }
+    
+    
+    //case 8
     
 
 }
