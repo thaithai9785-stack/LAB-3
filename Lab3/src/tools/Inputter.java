@@ -11,6 +11,7 @@ public class Inputter {
     private Scanner ndl ;
 
     public Inputter() {
+        this.ndl= new Scanner(System.in);
     }
 
     public Inputter(Scanner ndl) {
@@ -35,7 +36,7 @@ public class Inputter {
         String result = "";
         do {
             result = getString(mess);
-            more = !Acceptable.isValid(mess, pattern);
+            more = !Acceptable.isValid(result, pattern);
 
             if (more) {
                 System.out.println("Data is incorrect");

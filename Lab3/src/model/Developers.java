@@ -49,10 +49,18 @@ public class Developers {
         this.salary = salary;
     }
 
+//    @Override
+//    public String toString() {
+//        return "Developers{" + "devID=" + devID + ", devName=" + devName + ", progammingLanguage=" + progammingLanguage + ", salary=" + salary + '}';
+//    }
     @Override
     public String toString() {
-        return "Developers{" + "devID=" + devID + ", devName=" + devName + ", progammingLanguage=" + progammingLanguage + ", salary=" + salary + '}';
+
+        return String.format("| %-8s | %-25s | %-30s | %-8d |", 
+                this.devID, 
+                this.devName, 
+                this.progammingLanguage, 
+                this.salary);
     }
-    
     
 }

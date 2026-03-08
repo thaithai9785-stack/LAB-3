@@ -20,10 +20,11 @@ public class ProjectManager extends ArrayList<Projects> {
     public ProjectManager() {
     }
 
-    public ProjectManager(Inputter inputter) {
+    public ProjectManager(Inputter inputter, DeveloperManager devManager) {
         super();
         this.inputter = inputter;
         this.readFromFile();
+        this.devManager = devManager;
     }
 
     private void printProjectHeader() {
@@ -111,6 +112,7 @@ public class ProjectManager extends ArrayList<Projects> {
         while (true) {
             if (devManager.searchIDDev(id) == null) {
                 System.out.println("Developer ID does not exist! Please try again");
+                return;
             }
             else
                 break;
@@ -137,22 +139,21 @@ public class ProjectManager extends ArrayList<Projects> {
         }
 
         for (Developers d : this.devManager) {
-        boolean  hasProject=false;
-            System.out.println("Dev: " + d.getDevName());
+            boolean hasProject = false;
+            System.out.println("\nDev: " + d.getDevName());
 
-            printProjectHeader();
             for (Projects p : this) {
-                if(p.getDevID().trim().equalsIgnoreCase(d.getDevID().trim())){
-                if(hasProject == false)
-                    printProjectHeader();
-                System.out.println(p.toString());
-                hasProject =true;   
+                if (p.getDevID().trim().equalsIgnoreCase(d.getDevID().trim())) {
+
+                    System.out.printf("\tProject ID: %-8s | Duration: %-2d month | Start Date: %-10s\n",p.getDevID(), p.getDuration_Month(), p.getStart_date());
+                    hasProject = true;
                 }
             }
-            
-            if(!hasProject)
+
+            if (!hasProject) {
                 System.out.println("Dev don't have Project");
-            
+            }
+
         }
 
     }

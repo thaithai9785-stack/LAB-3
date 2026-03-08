@@ -2,7 +2,7 @@
 package tools;
 
 public interface Acceptable {
-    public final String DEV_ID_VALID = "^DEV\\{3}$";
+    public final String DEV_ID_VALID = "^DEV\\d{3}$";
     public final String NAME_VALID = "^\\S+(\\s+\\S+)+$";
     public final String LANGUAGE_VALID = "^.*\\S+.*$";
     public final String SALARY_VALID = "^[1-9]\\d{3,}$";

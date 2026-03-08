@@ -30,7 +30,14 @@ public class DeveloperManager extends ArrayList<Developers>{
         this.readFromFile();
     }
     
-    private void printHeader() {
+    public void printHeader() {
+        System.out.println("-----------------------------------------------------------------------------------");
+        // Thông số 8, 25, 30, 8 khớp y hệt với toString bên model
+        System.out.printf("| %-8s | %-25s | %-30s | %-8s |\n", "Dev ID", "Full Name", "Languages", "Salary");
+        System.out.println("-----------------------------------------------------------------------------------");
+    }
+    
+    private void printHeader1() {
         System.out.println("-------------------------------------------------------------------------");
         System.out.printf("| %-8s | %-20s | %-25s | %-8s |\n", "Dev ID", "Full Name", "Languages", "Salary");
         System.out.println("-------------------------------------------------------------------------");
