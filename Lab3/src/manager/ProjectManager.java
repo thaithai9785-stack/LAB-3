@@ -4,11 +4,14 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.PrintWriter;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Developers;
 import model.Projects;
+import tools.Acceptable;
 import tools.Inputter;
 
 public class ProjectManager extends ArrayList<Projects> {
@@ -40,6 +43,8 @@ public class ProjectManager extends ArrayList<Projects> {
             System.err.println("Cảnh báo: Không tìm thấy file " + pathFile);
             return;
         }
+        
+        
 
         try ( BufferedReader br = new BufferedReader(new FileReader(f))) {
             String line;
@@ -60,8 +65,47 @@ public class ProjectManager extends ArrayList<Projects> {
             Logger.getLogger(ProjectManager.class.getName()).log(Level.SEVERE, "Lỗi nạp file Project", ex);
         }
     }
-
+    
     private Projects textToProject(String line) {
+        try {
+            String[] parts = line.split(",");
+            if (parts.length >= 5) {
+                String proID = parts[0].trim();
+                String devID = parts[1].trim();
+                String name = parts[2].trim();
+                String durationStr = parts[3].trim();
+                String dateStr = parts[4].trim();
+
+                // 1 check duration
+                if (!Acceptable.isValid(durationStr, Acceptable.DURATION_VALID)) {
+                    System.err.println("-> CẢNH BÁO: Bỏ qua Project [" + proID + "] do Duration <1 month: (" + durationStr + " month)");
+                    return null;
+                }
+
+                // 2 check date
+                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                LocalDate startDate = LocalDate.parse(dateStr, dtf);
+                if (!startDate.isAfter(LocalDate.now())) {
+                    System.err.println("-> CẢNH BÁO: Bỏ qua Project [" + proID + "] do ngày nằm trong quá khứ (" + dateStr + ")");
+                    return null;
+                }
+
+                // Nếu vượt qua hết bẫy thì mới tạo Object
+                return new Projects(
+                        proID,
+                        devID,
+                        name,
+                        Integer.parseInt(durationStr),
+                        dateStr
+                );
+            }
+        } catch (Exception e) {
+            System.err.println("Bỏ qua dòng dữ liệu Project lỗi: " + line);
+        }
+        return null;
+    }
+
+    private Projects textToProject1(String line) {
         try {
             String[] parts = line.split(",");
             // Cắt 1 nhát ra 5 khúc, siêu đơn giản!
@@ -145,7 +189,7 @@ public class ProjectManager extends ArrayList<Projects> {
             for (Projects p : this) {
                 if (p.getDevID().trim().equalsIgnoreCase(d.getDevID().trim())) {
 
-                    System.out.printf("\tProject ID: %-8s | Duration: %-2d month | Start Date: %-10s\n",p.getDevID(), p.getDuration_Month(), p.getStart_date());
+                    System.out.printf("\tProject ID: %-8s | Duration: %-2d month | Start Date: %-10s\n",p.getProjectID(), p.getDuration_Month(), p.getStart_date());
                     hasProject = true;
                 }
             }

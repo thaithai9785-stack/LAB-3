@@ -32,16 +32,10 @@ public class DeveloperManager extends ArrayList<Developers>{
     
     public void printHeader() {
         System.out.println("-----------------------------------------------------------------------------------");
-        // Thông số 8, 25, 30, 8 khớp y hệt với toString bên model
         System.out.printf("| %-8s | %-25s | %-30s | %-8s |\n", "Dev ID", "Full Name", "Languages", "Salary");
         System.out.println("-----------------------------------------------------------------------------------");
     }
     
-    private void printHeader1() {
-        System.out.println("-------------------------------------------------------------------------");
-        System.out.printf("| %-8s | %-20s | %-25s | %-8s |\n", "Dev ID", "Full Name", "Languages", "Salary");
-        System.out.println("-------------------------------------------------------------------------");
-    }
     
     public void readFromFile() {
         this.clear();
@@ -112,7 +106,7 @@ public class DeveloperManager extends ArrayList<Developers>{
         return null;
     }
     
-    //case 1
+   //case 1
     public void ListDevelopers(){
        System.out.println("List all Developers");
        printHeader();
@@ -124,6 +118,7 @@ public class DeveloperManager extends ArrayList<Developers>{
             System.out.println(d.toString());
         }
     }
+    
     
     //case2
     public void addDev(){
@@ -137,7 +132,7 @@ public class DeveloperManager extends ArrayList<Developers>{
         
     }
     
-    //case 3
+ //case 3
     public void searchDevByID(){
         String ID = inputter.getString("ID to search: ");
         Developers d = searchIDDev(ID);
@@ -152,7 +147,7 @@ public class DeveloperManager extends ArrayList<Developers>{
         }
     }
     
-    //case 4
+     //case 4
     public void updateSalaryByID(){
         String ID = inputter.getString("ID to update: ");
         Developers d = searchIDDev(ID);
@@ -168,10 +163,9 @@ public class DeveloperManager extends ArrayList<Developers>{
         }
     }
     
-    
     //case5: can test lai
 
-    public ArrayList<Developers> searchDevByLanguage(String searchLang) {
+    public ArrayList<Developers> searchDevByLanguage1(String searchLang) {
         ArrayList<Developers> resultList = new ArrayList<>();
         
         for (Developers d : this) {
@@ -194,8 +188,7 @@ public class DeveloperManager extends ArrayList<Developers>{
         return resultList;
     }
     
-    //cach 2
-    public ArrayList<Developers> searchDevByLanguage1(String language){
+    public ArrayList<Developers> searchDevByLanguage(String language){
         ArrayList<Developers> resultTemp = new ArrayList<>();
         for (Developers d : this) {
             if(d.getProgammingLanguage().toLowerCase().contains(language.toLowerCase()))
@@ -206,7 +199,7 @@ public class DeveloperManager extends ArrayList<Developers>{
     
     public void ListDevByLanguage(){
         String language = inputter.getString("Language to list: ");
-        ArrayList<Developers> result = searchDevByLanguage1(language);
+        ArrayList<Developers> result = searchDevByLanguage(language);
         
         if (result.isEmpty())
             System.out.println("No found");
@@ -220,19 +213,9 @@ public class DeveloperManager extends ArrayList<Developers>{
     }
     
     
-    //case 10
     public void sortDevBySalary(){
-        if (this.isEmpty()) {
-            System.out.println("The Dev Lis is empty");
-            return;
-        }
         
-        Collections.sort(this, (Developers d1, Developers d2) -> Integer.compare(d1.getSalary(), d2.getSalary()));
-        
-        System.out.println("Sort successfully");
-        ListDevelopers();   
     }
-    
     
     
 }
