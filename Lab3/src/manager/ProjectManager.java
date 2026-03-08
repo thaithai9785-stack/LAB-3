@@ -78,7 +78,7 @@ public class ProjectManager extends ArrayList<Projects> {
 
                 // 1 check duration
                 if (!Acceptable.isValid(durationStr, Acceptable.DURATION_VALID)) {
-                    System.err.println("-> CẢNH BÁO: Bỏ qua Project [" + proID + "] do Duration <1 month: (" + durationStr + " month)");
+                    System.out.println("-> CẢNH BÁO: Bỏ qua Project [" + proID + "] do Duration <1 month: (" + durationStr + " month)");
                     return null;
                 }
 
@@ -86,7 +86,7 @@ public class ProjectManager extends ArrayList<Projects> {
                 DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
                 LocalDate startDate = LocalDate.parse(dateStr, dtf);
                 if (!startDate.isAfter(LocalDate.now())) {
-                    System.err.println("-> CẢNH BÁO: Bỏ qua Project [" + proID + "] do ngày nằm trong quá khứ (" + dateStr + ")");
+                    System.out.println("-> CẢNH BÁO: Bỏ qua Project [" + proID + "] do ngày nằm trong quá khứ (" + dateStr + ")");
                     return null;
                 }
 
@@ -100,7 +100,7 @@ public class ProjectManager extends ArrayList<Projects> {
                 );
             }
         } catch (Exception e) {
-            System.err.println("Bỏ qua dòng dữ liệu Project lỗi: " + line);
+            System.out.println("Bỏ qua dòng dữ liệu Project lỗi: " + line);
         }
         return null;
     }
