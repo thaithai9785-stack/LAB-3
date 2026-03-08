@@ -159,6 +159,55 @@ public class ProjectManager extends ArrayList<Projects> {
     
     
     //case 8
+    public void totalExperience(){
+        String devID = inputter.getString("ID to calculate: ");
+
+        if (devManager.searchIDDev(devID) == null) {
+            System.out.println("ko tim thay dev");
+            return;
+        }
+
+        int total = 0;
+        for (Projects p : this) {
+            if (p.getDevID().trim().equalsIgnoreCase(devID.trim())) {
+                total += p.getDuration_Month();
+            }
+        }
+        if(total == 0)
+            System.out.println("ko tham gia project nao (0 month)");
+        else
+            System.out.println("Experience: " + total);
+
+    }
     
+    
+    
+
+    public boolean inProject(String devID) {
+        for (Projects p : this) {
+            if (p.getDevID().equalsIgnoreCase(devID.trim())) {
+                return true; 
+            }
+        }
+        return false;
+    }
+    
+    public void deleteDeveloper(){
+        String devID = inputter.getString("iD dev to delete: ");
+        Developers foundDev = devManager.searchIDDev(devID.trim());
+        if(foundDev ==null){
+            System.out.println("ko tim thay dev");
+            return;
+        }
+        
+        if(inProject(devID)){
+            System.out.println("Dev dang co du an, ko xoa dc");
+            return;
+        }
+        
+        devManager.remove(foundDev);
+        System.out.println("Xoa thanh cong");
+        devManager.ListDevelopers();
+    }
 
 }
