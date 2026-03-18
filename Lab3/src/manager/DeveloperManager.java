@@ -216,7 +216,18 @@ public class DeveloperManager extends ArrayList<Developers>{
     
    //case 10
     public void sortDevBySalary(){
-       
+       if (this.isEmpty()) {
+            System.out.println("-> Kho Developer trống, không có gì để sắp xếp.");
+            return;
+        }
+
+        this.sort((d1, d2) -> Integer.compare(d2.getSalary(), d1.getSalary()));
+        
+        this.sort((d1,d2)-> Integer.compare(d1.getSalary(), d2.getSalary()));
+
+        System.out.println("-> Đã sắp xếp danh sách Developer theo lương tang dần!");
+        
+        this.ListDevelopers();
     }
 
     

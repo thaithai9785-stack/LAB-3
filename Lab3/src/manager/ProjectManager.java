@@ -220,11 +220,33 @@ public class ProjectManager extends ArrayList<Projects> {
     
     //case9
     public boolean inProject(String devID) {
-    return true;
+        for (Projects p : this) {
+            if (p.getDevID().trim().equalsIgnoreCase(devID.trim())) {
+                return true; 
+            }
+        }
+        return false;
     }
     
     public void deleteDeveloper(){
-      
+      String devID = inputter.getString("Enter Dev ID to delete: ");
+       
+        Developers foundDev = devManager.searchIDDev(devID.trim());
+        if (foundDev == null) {
+            System.out.println("-> LỖI: Không tìm thấy Developer có mã " + devID);
+            return;
+        }
+        
+       
+        if (inProject(devID)) {
+            System.out.println("-> CẢNH BÁO: Không thể xóa! Developer này đang có dự án chưa hoàn thành.");
+            return;
+        }
+        
+        devManager.remove(foundDev);
+        System.out.println("-> Xóa Developer thành công!");
+
+        devManager.ListDevelopers();
     }
 
 }
