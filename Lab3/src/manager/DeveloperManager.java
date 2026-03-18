@@ -104,7 +104,7 @@ public class DeveloperManager extends ArrayList<Developers>{
                 return d;
         }
         return null;
-    }
+    } 
     
    //case 1
     public void ListDevelopers(){
@@ -149,18 +149,17 @@ public class DeveloperManager extends ArrayList<Developers>{
     
      //case 4
     public void updateSalaryByID(){
-        String ID = inputter.getString("ID to update: ");
+        String ID = inputter.getString("ID to search: ");
         Developers d = searchIDDev(ID);
         
         if (d == null) {
             System.out.println("Developer ID does not exits ");
             return;
         }
-        else{
-            int salary = Integer.parseInt(inputter.inputAndLoop("Salaray: ", Acceptable.SALARY_VALID, true));
-            d.setSalary(salary);
-            System.out.println("Update Salary successfully");
-        }
+        
+        int salary = Integer.parseInt(inputter.inputAndLoop("salary", Acceptable.SALARY_VALID, true));
+        d.setSalary(salary);
+        System.out.println("update thanh cong");
     }
     
     //case5: can test lai
@@ -188,42 +187,36 @@ public class DeveloperManager extends ArrayList<Developers>{
         return resultList;
     }
     
-    public ArrayList<Developers> searchDevByLanguage(String language){
-        ArrayList<Developers> resultTemp = new ArrayList<>();
+    
+    public ArrayList<Developers> searhLang(String lang){
+     ArrayList<Developers> result = new ArrayList<>();
         for (Developers d : this) {
-            if(d.getProgammingLanguage().toLowerCase().contains(language.toLowerCase()))
-                resultTemp.add(d);
+            if(d.getProgammingLanguage().toLowerCase().contains(lang.toLowerCase()))
+                result.add(d);
         }
-        return resultTemp;
+        return result;
     }
     
+    
     public void ListDevByLanguage(){
-        String language = inputter.getString("Language to list: ");
-        ArrayList<Developers> result = searchDevByLanguage(language);
-        
-        if (result.isEmpty())
-            System.out.println("No found");
-        else {
-            printHeader();
-            for (Developers d : result) {
-                System.out.println(d.toString());
-            }
+       String lang = inputter.getString("Lang");
+       ArrayList<Developers> result = searhLang(lang);
+       if(result.isEmpty()){
+           System.out.println("ko co ngon ngu");
+           return;
+       }
+       
+        for (Developers d : result) {
+            System.out.println(d.toString());
         }
-      
+       
+       
     }
     
     
    //case 10
     public void sortDevBySalary(){
-        if (this.isEmpty()) {
-            System.out.println("The Dev Lis is empty");
-            return;
-        }
-        
-        Collections.sort(this, (Developers d1, Developers d2) -> Integer.compare(d1.getSalary(), d2.getSalary()));
-        
-        System.out.println("Sort successfully");
-        ListDevelopers();   
+       
     }
 
     

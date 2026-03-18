@@ -43,9 +43,6 @@ public class ProjectManager extends ArrayList<Projects> {
             System.err.println("Cảnh báo: Không tìm thấy file " + pathFile);
             return;
         }
-        
-        
-
         try ( BufferedReader br = new BufferedReader(new FileReader(f))) {
             String line;
             while ((line = br.readLine()) != null) {
@@ -75,13 +72,11 @@ public class ProjectManager extends ArrayList<Projects> {
                 String name = parts[2].trim();
                 String durationStr = parts[3].trim();
                 String dateStr = parts[4].trim();
-
                 // 1 check duration
                 if (!Acceptable.isValid(durationStr, Acceptable.DURATION_VALID)) {
                     System.out.println("-> CẢNH BÁO: Bỏ qua Project [" + proID + "] do Duration <1 month: (" + durationStr + " month)");
                     return null;
                 }
-
                 // 2 check date
                 DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
                 LocalDate startDate = LocalDate.parse(dateStr, dtf);
@@ -89,7 +84,6 @@ public class ProjectManager extends ArrayList<Projects> {
                     System.out.println("-> CẢNH BÁO: Bỏ qua Project [" + proID + "] do ngày nằm trong quá khứ (" + dateStr + ")");
                     return null;
                 }
-
                 // Nếu vượt qua hết bẫy thì mới tạo Object
                 return new Projects(
                         proID,
@@ -141,7 +135,8 @@ public class ProjectManager extends ArrayList<Projects> {
     }
     
     
-    public Projects searchProjectById(String proID){
+//xử lí
+ public Projects searchProjectById(String proID){
         for (Projects p : this) {
             if(p.getProjectID().trim().equalsIgnoreCase(proID.trim()))
                 return p;
@@ -149,6 +144,7 @@ public class ProjectManager extends ArrayList<Projects> {
         return null;
     }
 
+    //case 6
     public void addProject() {
         devManager.ListDevelopers();
         String id = inputter.getString("Enter Dev ID to assign this project: ");
@@ -205,54 +201,30 @@ public class ProjectManager extends ArrayList<Projects> {
     
     //case 8
     public void totalExperience(){
-        String devID = inputter.getString("ID to calculate: ");
-
-        if (devManager.searchIDDev(devID) == null) {
-            System.out.println("ko tim thay dev");
-            return;
-        }
-
-        int total = 0;
+       String id = inputter.getString("id");
+       Developers d = devManager.searchIDDev(id);
+       if(d==null){
+           System.out.println("ko tim thay dev");
+           return;
+       }
+       int total=0;
         for (Projects p : this) {
-            if (p.getDevID().trim().equalsIgnoreCase(devID.trim())) {
-                total += p.getDuration_Month();
+            if(p.getDevID().trim().equalsIgnoreCase(id.trim())){
+                total +=p.getDuration_Month();
             }
         }
-        if(total == 0)
-            System.out.println("ko tham gia project nao (0 month)");
-        else
-            System.out.println("Experience: " + total);
-
+        System.out.println("kinh nghiem: "+total);
     }
     
     
     
-
+    //case9
     public boolean inProject(String devID) {
-        for (Projects p : this) {
-            if (p.getDevID().equalsIgnoreCase(devID.trim())) {
-                return true; 
-            }
-        }
-        return false;
+    return true;
     }
     
     public void deleteDeveloper(){
-        String devID = inputter.getString("iD dev to delete: ");
-        Developers foundDev = devManager.searchIDDev(devID.trim());
-        if(foundDev ==null){
-            System.out.println("ko tim thay dev");
-            return;
-        }
-        
-        if(inProject(devID)){
-            System.out.println("Dev dang co du an, ko xoa dc");
-            return;
-        }
-        
-        devManager.remove(foundDev);
-        System.out.println("Xoa thanh cong");
-        devManager.ListDevelopers();
+      
     }
 
 }
